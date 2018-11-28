@@ -2,6 +2,9 @@
 // Source from https://developer.gnome.org/gtk3/stable/gtk-getting-started.html
 
 #include <gtk/gtk.h>
+#include "sentence.h"
+#include "forms.c"
+#include "basic.c"
 
 static void print_hello (GtkWidget *widget, gpointer data)
 {
