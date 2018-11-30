@@ -1,0 +1,9 @@
+Personal Object pronouns
+me
+him
+her
+it
+us
+you
+them
+whom
