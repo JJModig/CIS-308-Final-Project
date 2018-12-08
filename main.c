@@ -5,6 +5,7 @@
 #include "sentence.h"
 #include "forms.c"
 #include "basic.c"
+#include "list.h"
 
 static void print_hello (GtkWidget *widget, gpointer data)
 {
