@@ -6,9 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include "sentence.h"
-#include "forms.c"
-#include "basic.c"
+#include "forms.h"
 #include "list.h"
 
 //Generates random integer from 0 to x
@@ -16,6 +14,16 @@ int randZeroToX(int x) {
 	return (int)((double)rand() / ((double)RAND_MAX + 1.0) * (double)x);
 }
 
+//Remove underscores from a string
+char * removeUnderscores(char * str) {
+	int length = strlen(str);
+	for(int i=0; i<length; i++){
+		if(str[i] == '_'){
+			str[i] = ' ';
+		}
+	}
+	return str;
+}
 static void print_hello (GtkWidget *widget, gpointer data)
 {
   g_print ("Hello World\n");
@@ -72,6 +80,8 @@ int main (int argc, char **argv)
 	initList(dump, 1);
 	List *subjects = malloc(sizeof(List));
 	initList(subjects, 10);
+	List *nouns = malloc(sizeof(List));
+	initList(nouns, 10);
 	//Reading from file
 	uintptr_t currentList = (uintptr_t)dump;
 	char str[STR_LEN + 1];
@@ -79,6 +89,9 @@ int main (int argc, char **argv)
 		if(str[0] == '>') {
 			if(strcmp(str, ">subjects") == 0){
 				currentList = (uintptr_t)subjects;
+			}
+			else if(strcmp(str, ">nouns") == 0){
+				currentList = (uintptr_t)nouns;
 			}
 			else{
 				currentList = (uintptr_t)dump;
@@ -103,14 +116,18 @@ int main (int argc, char **argv)
 		}*/
 		//Chooses a random form
 		int r = randZeroToX(NUM_FORMS);
+		char insult[100];
 		switch(r) {
 		case 0:
 			//(Not yet implemented) Calls a function to generate an insult
 			//in the form of form0
-			printf("form0\n");
+			strcpy(insult, form0(insult, nouns->array[randZeroToX(nouns->used)]));
+			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 1:
-			printf("form1\n");
+			strcpy(insult, form1(insult, subjects->array[randZeroToX(subjects->used)],
+				nouns->array[randZeroToX(nouns->used)]));
+			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 2:
 			printf("form2\n");
@@ -130,4 +147,6 @@ int main (int argc, char **argv)
 	free(dump);
 	freeList(subjects);
 	free(subjects);
+	freeList(nouns);
+	free(nouns);
 }
