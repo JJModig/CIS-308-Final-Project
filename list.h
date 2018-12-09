@@ -2,6 +2,7 @@
 #define list_h
 
 #include <stdlib.h>
+#include <string.h>
 //This implements a dynamic array.
 //Solution taken from https://stackoverflow.com/questions/3536153/c-dynamically-growing-array
 //and modified for strings: maximum 15 characters
@@ -13,9 +14,9 @@ typedef struct List{
 } List;
 
 void initList(List *a, size_t initialSize) {
-  	a->array = malloc(initialSize * sizeof(char*));
+  	a->array = (char **) malloc(initialSize * sizeof(char*));
 	for(int i=0; i<initialSize; i++) {
-		a->array[i] = malloc((STR_LEN+1) * sizeof(char));
+		a->array[i] = (char *) malloc((STR_LEN+1) * sizeof(char));
 	}
   a->used = 0;
   a->size = initialSize;
@@ -26,12 +27,12 @@ void insertList(List *a, char *element) {
   // Therefore a->used can go up to a->size 
   if (a->used == a->size) {
     	a->size *= 2;
-    	a->array = realloc(a->array, a->size * sizeof(char*));
+    	a->array = (char **) realloc(a->array, a->size * sizeof(char*));
 	for(int i=(a->size)/2; i< a->size; i++) {
-		a->array[i] = malloc((STR_LEN+1) * sizeof(char));
+		a->array[i] = (char *) malloc((STR_LEN+1) * sizeof(char));
 	}
   }
-  a->array[a->used++] = element;
+  strcpy(a->array[a->used++], element);
 }
 
 void freeList(List *a) {
