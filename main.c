@@ -65,6 +65,7 @@ int main (int argc, char **argv)
 }
 */
 //Console main method
+
 int main (int argc, char **argv)
 {
 	if(argc != 2) {
@@ -78,20 +79,40 @@ int main (int argc, char **argv)
 	}	//Initializes word lists
 	List *dump = malloc(sizeof(List));
 	initList(dump, 1);
-	List *subjects = malloc(sizeof(List));
-	initList(subjects, 10);
-	List *nouns = malloc(sizeof(List));
-	initList(nouns, 10);
+	List *subjectsPersonal = malloc(sizeof(List));
+	initList(subjectsPersonal, 10);
+	List *nounsMean = malloc(sizeof(List));
+	initList(nounsMean, 10);
+	List *subjectsBody = malloc(sizeof(List));
+	initList(subjectsBody, 10);
+	List *verbsSense = malloc(sizeof(List));
+	initList(verbsSense, 10);
+	List *adjectives = malloc(sizeof(List));
+	initList(adjectives, 10);
+	List *nounsRand = malloc(sizeof(List));
+	initList(nounsRand, 10);
 	//Reading from file
 	uintptr_t currentList = (uintptr_t)dump;
 	char str[STR_LEN + 1];
 	while(fscanf(f, "%s", str) == 1){
 		if(str[0] == '>') {
-			if(strcmp(str, ">subjects") == 0){
-				currentList = (uintptr_t)subjects;
+			if(strcmp(str, ">subjects_personal") == 0){
+				currentList = (uintptr_t)subjectsPersonal;
 			}
-			else if(strcmp(str, ">nouns") == 0){
-				currentList = (uintptr_t)nouns;
+			else if(strcmp(str, ">nouns_mean") == 0){
+				currentList = (uintptr_t)nounsMean;
+			}
+			else if(strcmp(str, ">subjects_body") == 0){
+				currentList = (uintptr_t)subjectsBody;
+			}
+			else if(strcmp(str, ">verbs_sense") == 0){
+				currentList = (uintptr_t)verbsSense;
+			}
+			else if(strcmp(str, ">adjectives") == 0){
+				currentList = (uintptr_t)adjectives;
+			}
+			else if(strcmp(str, ">nouns_rand") == 0){
+				currentList = (uintptr_t)nounsRand;
 			}
 			else{
 				currentList = (uintptr_t)dump;
@@ -121,19 +142,29 @@ int main (int argc, char **argv)
 		case 0:
 			//(Not yet implemented) Calls a function to generate an insult
 			//in the form of form0
-			strcpy(insult, form0(insult, nouns->array[randZeroToX(nouns->used)]));
+			strcpy(insult, form0(insult, nounsMean->array[randZeroToX(nounsMean->used)]));
 			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 1:
-			strcpy(insult, form1(insult, subjects->array[randZeroToX(subjects->used)],
-				nouns->array[randZeroToX(nouns->used)]));
+			strcpy(insult, form1(insult, subjectsPersonal->array[randZeroToX(subjectsPersonal->used)],
+				nounsMean->array[randZeroToX(nounsMean->used)]));
 			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 2:
-			printf("form2\n");
+			strcpy(insult, form2(insult, subjectsBody->array[randZeroToX(subjectsBody->used)],
+				verbsSense->array[randZeroToX(verbsSense->used)],
+				adjectives->array[randZeroToX(adjectives->used)],
+				nounsRand->array[randZeroToX(nounsRand->used)]));
+			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 3:
-			printf("form3\n");
+			strcpy(insult, form3(insult,
+				subjectsPersonal->array[randZeroToX(subjectsPersonal->used)],
+				subjectsBody->array[randZeroToX(subjectsBody->used)],
+				verbsSense->array[randZeroToX(verbsSense->used)],
+				adjectives->array[randZeroToX(adjectives->used)],
+				nounsRand->array[randZeroToX(nounsRand->used)]));
+			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 4:
 			printf("form4\n");
@@ -145,8 +176,17 @@ int main (int argc, char **argv)
 	//Free word lists
 	freeList(dump);
 	free(dump);
-	freeList(subjects);
-	free(subjects);
-	freeList(nouns);
-	free(nouns);
+	freeList(subjectsPersonal);
+	free(subjectsPersonal);
+	freeList(nounsMean);
+	free(nounsMean);
+	freeList(subjectsBody);
+	free(subjectsBody);
+	freeList(verbsSense);
+	free(verbsSense);
+	freeList(adjectives);
+	free(adjectives);
+	freeList(nounsRand);
+	free(nounsRand);
 }
+
