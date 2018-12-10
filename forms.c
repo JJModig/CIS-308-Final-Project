@@ -47,3 +47,13 @@ char * form3(char * insult, char *subjectPersonal, char *subjectBody, char *verb
 	strcat(insult, ".");
 	return insult;
 }
+char * form4(char * insult, char *verbAction, char *verbSense2, char *adjectiveMean) {
+	strcpy(insult, "maybe if you ");
+	strcat(insult, verbAction);
+	strcat(insult, ", you wouldn't ");
+	strcat(insult, verbSense2);
+	strcat(insult, " so ");
+	strcat(insult, adjectiveMean);
+	strcat(insult, ".");
+	return insult;
+}

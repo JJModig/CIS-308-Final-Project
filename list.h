@@ -6,7 +6,7 @@
 //This implements a dynamic array.
 //Solution taken from https://stackoverflow.com/questions/3536153/c-dynamically-growing-array
 //and modified for strings: maximum 15 characters
-#define STR_LEN 15
+#define STR_LEN 25
 typedef struct List{
   char **array;
   size_t used;

@@ -91,6 +91,12 @@ int main (int argc, char **argv)
 	initList(adjectives, 10);
 	List *nounsRand = malloc(sizeof(List));
 	initList(nounsRand, 10);
+	List *verbsAction = malloc(sizeof(List));
+	initList(verbsAction, 10);
+	List *verbsSense2 = malloc(sizeof(List));
+	initList(verbsSense2, 10);
+	List *adjectivesMean = malloc(sizeof(List));
+	initList(adjectivesMean, 10);
 	//Reading from file
 	uintptr_t currentList = (uintptr_t)dump;
 	char str[STR_LEN + 1];
@@ -113,6 +119,15 @@ int main (int argc, char **argv)
 			}
 			else if(strcmp(str, ">nouns_rand") == 0){
 				currentList = (uintptr_t)nounsRand;
+			}
+			else if(strcmp(str, ">verbs_action") == 0){
+				currentList = (uintptr_t)verbsAction;
+			}
+			else if(strcmp(str, ">verbs_sense_2") == 0){
+				currentList = (uintptr_t)verbsSense2;
+			}
+			else if(strcmp(str, ">adjectives_mean") == 0){
+				currentList = (uintptr_t)adjectivesMean;
 			}
 			else{
 				currentList = (uintptr_t)dump;
@@ -167,7 +182,11 @@ int main (int argc, char **argv)
 			printf("%s\n", removeUnderscores(insult));
 			break;
 		case 4:
-			printf("form4\n");
+			strcpy(insult, form4(insult,
+				verbsAction->array[randZeroToX(verbsAction->used)],
+				verbsSense2->array[randZeroToX(verbsSense2->used)],
+				adjectivesMean->array[randZeroToX(adjectivesMean->used)]));
+			printf("%s\n", removeUnderscores(insult));
 			break;
 		default:
 			printf("error\n");
@@ -188,5 +207,11 @@ int main (int argc, char **argv)
 	free(adjectives);
 	freeList(nounsRand);
 	free(nounsRand);
+	freeList(verbsAction);
+	free(verbsAction);
+	freeList(verbsSense2);
+	free(verbsSense2);
+	freeList(adjectivesMean);
+	free(adjectivesMean);
 }
 
